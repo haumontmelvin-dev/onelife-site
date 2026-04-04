@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneLife — Serveur Garry's Mod HL2RP</title>
+  <meta name="description" content="Site officiel du serveur OneLife Garry's Mod Half-Life 2 Roleplay. Règlement, histoire, communauté et accès Discord." />
+  <style>
+    :root {
+      --bg: #0a0d12;
+      --bg-soft: #10151d;
+      --panel: rgba(17, 24, 34, 0.88);
+      --panel-strong: rgba(11, 16, 24, 0.96);
+      --text: #e8edf5;
+      --muted: #9eacbf;
+      --accent: #ff9d2f;
+      --accent-2: #67b7ff;
+      --line: rgba(255, 255, 255, 0.08);
+      --danger: #ff5b5b;
+      --success: #8bffb0;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(103, 183, 255, 0.10), transparent 30%),
+        radial-gradient(circle at top left, rgba(255, 157, 47, 0.14), transparent 26%),
+        linear-gradient(180deg, #0b1017 0%, #090c11 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(7, 10, 15, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 78px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(255,157,47,0.2), rgba(103,183,255,0.18));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      color: var(--accent);
+      font-size: 1.25rem;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #ffbd59);
+      color: #121212;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(255, 157, 47, 0.2);
+    }
+
+    .hero {
+      padding: 78px 0 34px;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .panel,
+    .rule-card,
+    .timeline-card,
+    .discord-card,
+    .footer-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(135deg, rgba(255, 157, 47, 0.12), transparent 40%),
+        linear-gradient(180deg, rgba(11,16,24,0.98), rgba(11,16,24,0.88));
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(8,12,18,0.95), rgba(8,12,18,0.35)),
+        url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=80') center/cover;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    .hero h1 {
+      margin-top: 18px;
+      font-size: clamp(2.3rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
+    }
+
+    .hero p.lead {
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: #ced7e4;
+      max-width: 60ch;
+      margin: 18px 0 0;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #ffb85d);
+      color: #0d0d0d;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .hero-stats {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .side-column {
+      display: grid;
+      gap: 20px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(16,21,29,0.95), rgba(10,14,20,0.95));
+    }
+
+    .server-ip {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px;
+      font-weight: 700;
+      overflow: auto;
+    }
+
+    .copy-btn {
+      cursor: pointer;
+      border: 0;
+      border-radius: 12px;
+      background: rgba(103, 183, 255, 0.18);
+      color: #dcefff;
+      padding: 10px 12px;
+      font-weight: 800;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .section {
+      padding: 26px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.55rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.7;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rule-card {
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(16,21,29,0.92), rgba(12,16,23,0.92));
+    }
+
+    .rule-card h3 {
+      margin-bottom: 14px;
+      font-size: 1.2rem;
+    }
+
+    .rule-card ul {
+      padding-left: 18px;
+      margin: 0;
+      color: #d8e0ec;
+      line-height: 1.8;
+    }
+
+    .rule-card li + li { margin-top: 8px; }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-card {
+      padding: 22px;
+      display: grid;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(16,21,29,0.92), rgba(12,16,23,0.92));
+    }
+
+    .timeline-card strong {
+      color: var(--accent);
+      font-size: 0.94rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .timeline-card p {
+      margin: 0;
+      color: #d8e0ec;
+      line-height: 1.8;
+    }
+
+    .discord-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.95fr;
+      gap: 18px;
+    }
+
+    .discord-card {
+      padding: 26px;
+      background: linear-gradient(180deg, rgba(16,21,29,0.92), rgba(12,16,23,0.92));
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      color: #d8e0ec;
+      line-height: 1.6;
+    }
+
+    .check-item i {
+      font-style: normal;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(139,255,176,0.14);
+      color: var(--success);
+      font-weight: 900;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .discord-widget {
+      width: 100%;
+      min-height: 500px;
+      border: 0;
+      border-radius: 18px;
+      background: #111827;
+    }
+
+    .footer {
+      padding: 30px 0 50px;
+    }
+
+    .footer-card {
+      padding: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      background: linear-gradient(180deg, rgba(16,21,29,0.92), rgba(12,16,23,0.92));
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .accent { color: var(--accent); }
+    .accent-blue { color: var(--accent-2); }
+
+    @media (max-width: 980px) {
+      .hero-wrap,
+      .discord-grid,
+      .rules-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: start;
+        flex-direction: column;
+        padding: 12px 0 18px;
+      }
+
+      .hero-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding-top: 42px; }
+      .hero-card,
+      .panel,
+      .rule-card,
+      .timeline-card,
+      .discord-card,
+      .footer-card {
+        border-radius: 18px;
+      }
+
+      .hero-card,
+      .panel,
+      .rule-card,
+      .timeline-card,
+      .discord-card,
+      .footer-card {
+        padding: 20px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      .nav-cta {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <div class="brand-badge"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAAAgAElEQVR4nO3dT3IbS7bF4d5iMzkTgqzJ5jzMZiL7nP//F2X5G5RClZSs7G0R4Y7sHkB7U5YdF1d1QJkF7l3g8b9/8v9wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPy4z1v2v7+f3+8f+f7w9fX1+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPn/8P4dQ0Lk6m9x9dVt6v6b3m0mGk7mJt2P2X1o2u4U2r7m4m5xHn8hVv8kP2g4mC7u7p6V3d2e5JmU7Vv1N1v6aY6w2b7l0t6m8m7aUe7Xz8i7F4h8V7mP4mL6b8r7Fv3t2xv5o6j2c8d2b7o7k4h5a7n4r8m4g7Wb9z7s6v4X7y7t2P7p7i4W7t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7f9Zp8Gm3w5f8q9b3f9cK9z9v9f3q3m9XK+3r8O3Pp6e7D9r3V8n2c5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y5m2m6Y7/9HcN5x0v3wYd9x8b+X3b8+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnz58/f/78+fPnzz+2k4Qx3oN5VwAAAABJRU5ErkJggg==" alt="Logo OneLife" /></div>
+        <div>
+          <small>Serveur Garry's Mod</small>
+          <span>OneLife</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#regles-cite">Règles de la cité</a>
+        <a href="#regles-serveur">Règles serveur</a>
+        <a href="#histoire">Histoire</a>
+        <a href="#discord">Discord</a>
+      </nav>
+
+      <a class="nav-cta" href="https://discord.gg/tonlien" target="_blank" rel="noopener noreferrer">Rejoindre le Discord</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <article class="hero-card">
+          <div class="hero-content">
+            <div class="eyebrow">HL2RP • Univers sombre • Roleplay immersif</div>
+            <h1>Bienvenue sur OneLife</h1>
+            <p class="lead">
+              Entrez dans un univers oppressant inspiré de <span class="accent">Half-Life 2</span>, où la Combine contrôle la ville,
+              la résistance s'organise dans l'ombre et chaque décision peut changer votre destin. Rejoignez une expérience
+              <span class="accent-blue">Roleplay sérieuse</span>, structurée et pensée pour les joueurs qui aiment le lore, la tension et les interactions marquantes.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="steam://connect/ton.ip.ici">Se connecter au serveur</a>
+            <a class="btn btn-secondary" href="#regles-serveur">Lire le règlement</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>IP serveur</strong>
+              <span>ton.ip.ici:27015</span>
+            </div>
+            <div class="stat">
+              <strong>Mode de jeu</strong>
+              <span>Half-Life 2 Roleplay</span>
+            </div>
+            <div class="stat">
+              <strong>Communauté</strong>
+              <span>Discord actif & staff présent</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="side-column">
+          <section class="panel">
+            <h2>Connexion rapide</h2>
+            <p class="note">Copie l'adresse du serveur ou clique sur le bouton de connexion directe.</p>
+            <div class="server-ip">
+              <span id="serverAddress">ton.ip.ici:27015</span>
+              <button class="copy-btn" onclick="copyIP()">Copier</button>
+            </div>
+            <div class="badge-row">
+              <div class="badge">Whitelist : ouverte</div>
+              <div class="badge">Lore : HL2RP</div>
+              <div class="badge">Staff : actif</div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Pourquoi nous rejoindre ?</h2>
+            <div class="checklist">
+              <div class="check-item"><i>✓</i><span>Une ambiance fidèle à Half-Life 2 avec une vraie identité de cité.</span></div>
+              <div class="check-item"><i>✓</i><span>Des règles claires pour favoriser un roleplay propre, sérieux et agréable.</span></div>
+              <div class="check-item"><i>✓</i><span>Un Discord central pour les annonces, candidatures, événements et supports joueurs.</span></div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section id="regles-cite" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Règles de la cité</h2>
+            <p>Ces règles concernent le comportement en jeu dans l'univers de la ville, des citoyens, de la Combine et des factions. Adapte-les à ton propre lore.</p>
+          </div>
+        </div>
+
+        <div class="rules-grid">
+          <article class="rule-card">
+            <h3>Citoyens</h3>
+            <ul>
+              <li>Tout citoyen doit obéir aux ordres de la milice et des unités de la Combine.</li>
+              <li>Les attroupements non autorisés peuvent être considérés comme suspects.</li>
+              <li>La possession d'objets illégaux, de propagande ou de matériel de résistance est interdite.</li>
+              <li>Le non-respect du couvre-feu peut entraîner une arrestation immédiate.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Combine / Métropolice</h3>
+            <ul>
+              <li>Les unités doivent respecter leur chaîne de commandement et parler de manière cohérente avec leur rôle.</li>
+              <li>Les arrestations doivent avoir une base RP crédible et être documentées si nécessaire.</li>
+              <li>L'abus d'autorité gratuit ou purement punitif sans contexte RP est interdit.</li>
+              <li>La brutalité doit rester cohérente avec la situation et le règlement global du serveur.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Résistance</h3>
+            <ul>
+              <li>Les membres de la résistance doivent agir dans la discrétion et éviter les actions suicidaires sans préparation.</li>
+              <li>Les caches, échanges et réunions clandestines doivent rester crédibles dans le contexte de la ville.</li>
+              <li>Les actions offensives importantes doivent s'inscrire dans un projet RP et non dans la simple recherche d'action.</li>
+              <li>Le recrutement sauvage ou incohérent de civils est déconseillé et peut être sanctionné si abusif.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Comportement RP général</h3>
+            <ul>
+              <li>Respecte la peur, la tension et la hiérarchie propres à l'univers HL2RP.</li>
+              <li>Évite les comportements troll, incohérents ou anachroniques.</li>
+              <li>Joue les conséquences de tes actes : arrestation, blessure, perte de confiance, etc.</li>
+              <li>Favorise les scènes construites, le dialogue et l'immersion avant la confrontation directe.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="regles-serveur" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Règles serveur</h2>
+            <p>La base pour garder une expérience propre et agréable pour tout le monde. Ces règles sont prêtes à l'emploi, mais tu peux bien sûr les personnaliser.</p>
+          </div>
+        </div>
+
+        <div class="rules-grid">
+          <article class="rule-card">
+            <h3>Respect & comportement</h3>
+            <ul>
+              <li>Le respect entre joueurs et envers le staff est obligatoire.</li>
+              <li>Les insultes graves, provocations répétées et comportements toxiques sont interdits.</li>
+              <li>Aucun harcèlement, discrimination ou contenu choquant n'est toléré.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Règles RP</h3>
+            <ul>
+              <li>No FearRP, FreeKill, MetaGaming, PowerGaming et MassRP non justifié sont interdits.</li>
+              <li>Le retour sur scène après une mort RP ou un coma doit respecter les règles du serveur.</li>
+              <li>Le vocal et le texte hors personnage ne doivent pas casser l'immersion.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Construction & props</h3>
+            <ul>
+              <li>Le propblock, propkill et tout abus lié aux outils de construction sont interdits.</li>
+              <li>Les constructions doivent rester propres, accessibles et cohérentes RP.</li>
+              <li>Les bases ou barricades abusives peuvent être supprimées par le staff.</li>
+            </ul>
+          </article>
+
+          <article class="rule-card">
+            <h3>Sanctions</h3>
+            <ul>
+              <li>Le staff peut avertir, jail, kick ou bannir selon la gravité des faits.</li>
+              <li>Les récidives entraînent des sanctions plus lourdes.</li>
+              <li>Les contestations se font calmement sur Discord ou via le support staff.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="histoire" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Histoire</h2>
+            <p>Un exemple de présentation de lore prêt à être remplacé par ton histoire officielle.</p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-card">
+            <strong>Après la guerre des Sept Heures</strong>
+            <p>La Terre a chuté en un temps record. L'humanité s'est pliée à la domination de la Combine, un empire interdimensionnel dont la puissance dépasse tout ce que les anciens gouvernements pouvaient imaginer.</p>
+          </article>
+
+          <article class="timeline-card">
+            <strong>La Cité 17 sous surveillance</strong>
+            <p>Dans les rues grises de la ville, les écrans diffusent la propagande, les contrôles d'identité se multiplient et la population survit dans un climat de peur. Chaque ration, chaque mot, chaque déplacement peut être observé.</p>
+          </article>
+
+          <article class="timeline-card">
+            <strong>Une résistance dans l'ombre</strong>
+            <p>Malgré l'oppression, certains refusent de céder. Des réseaux clandestins s'organisent, transmettent des informations, cachent du matériel et espèrent un jour renverser l'ordre établi.</p>
+          </article>
+
+          <article class="timeline-card">
+            <strong>Votre rôle dans l'histoire</strong>
+            <p>Choisirez-vous l'obéissance pour survivre, la collaboration pour gravir les échelons, ou la rébellion au risque de tout perdre ? Ici, chaque personnage écrit une part du destin de la cité.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="discord" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Discord</h2>
+            <p>Le centre de la communauté : annonces, candidatures, signalements, support et organisation des événements du serveur.</p>
+          </div>
+        </div>
+
+        <div class="discord-grid">
+          <article class="discord-card">
+            <h3>Rejoins la communauté</h3>
+            <p class="note">Clique sur le bouton ci-dessous pour accéder au serveur Discord officiel.</p>
+            <div class="hero-actions" style="margin-top:16px;">
+              <a class="btn btn-primary" href="https://discord.gg/tonlien" target="_blank" rel="noopener noreferrer">Entrer sur le Discord</a>
+            </div>
+
+            <div class="checklist">
+              <div class="check-item"><i>✓</i><span>Annonces importantes du serveur</span></div>
+              <div class="check-item"><i>✓</i><span>Tickets d'aide et contact staff</span></div>
+              <div class="check-item"><i>✓</i><span>Candidatures factions / staff</span></div>
+              <div class="check-item"><i>✓</i><span>Organisation des scènes et événements</span></div>
+            </div>
+
+            <p class="note">
+              <strong>Astuce :</strong> tu peux intégrer le widget Discord ci-contre. Il suffit d'activer le widget dans les paramètres de ton serveur Discord puis de remplacer l'URL de l'iframe.
+            </p>
+          </article>
+
+          <article class="discord-card">
+            <h3>Widget Discord</h3>
+            <iframe
+              class="discord-widget"
+              src="https://discord.com/widget?id=123456789012345678&theme=dark"
+              allowtransparency="true"
+              sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+            </iframe>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-card">
+        <div>
+          <strong style="display:block;color:var(--text);margin-bottom:8px;">OneLife</strong>
+          <span>Serveur Garry's Mod Half-Life 2 Roleplay</span>
+        </div>
+
+        <div class="footer-links">
+          <a href="#regles-cite">Règles de la cité</a>
+          <a href="#regles-serveur">Règles serveur</a>
+          <a href="#histoire">Histoire</a>
+          <a href="#discord">Discord</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function copyIP() {
+      const ip = document.getElementById('serverAddress').innerText.trim();
+      navigator.clipboard.writeText(ip).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const oldText = btn.innerText;
+        btn.innerText = 'Copié !';
+        setTimeout(() => btn.innerText = oldText, 1600);
+      }).catch(() => {
+        alert('Impossible de copier automatiquement. Adresse du serveur : ' + ip);
+      });
+    }
+  </script>
+</body>
+</html>
